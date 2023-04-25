@@ -9,10 +9,10 @@ const genreModel = mongoose.model("Genre", GenreSchema);
 
 function validate(genre) {
   const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
   });
 
   return schema.validate(genre);
 }
 
-export { genreModel, validate };
+export { genreModel, validate, GenreSchema };
