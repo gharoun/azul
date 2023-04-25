@@ -40,6 +40,10 @@ const updateGenre = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
+    const { error } = validateGenre(req.body);
+    console.log(error);
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
 
     await genreModel.findByIdAndUpdate({ _id: id }, { name });
     res.status(200).json({ message: "Genre Updated successfully." });
@@ -50,11 +54,21 @@ const updateGenre = async (req, res) => {
 const deleteGenre = async (req, res) => {
   try {
     const { id } = req.params;
-    await genreModel.findByIdAndDelete({ _id: id });
-    res.status(200).json({ message: "Genre deleted successfully." });
+    const genre = await genreModel.findByIdAndDelete({ _id: id });
+    if (!genre)
+      return res
+        .status(404)
+        .json({ message: "The genre with the given id doesn't exist" });
+    res.status(200).json({ message: "Genre deleted successfully.", genre });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+function validateGenre(genre) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+  });
 
+  return schema.validate(genre);
+}
 export { getAllGenres, findGenreById, updateGenre, deleteGenre, createGenre };

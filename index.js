@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 app.use("/api/genres", genreRouter);
 const startServer = async () => {
   try {
-    connectDB("mongodb://127.0.0.1:27017/genres");
+    connectDB("mongodb://127.0.0.1:27017/azul");
 
     app.listen(port, () => console.log(`Listening on port ${port}...`));
   } catch (error) {
