@@ -1,5 +1,4 @@
-import genreModel from "../mongodb/models/genre.js";
-import Joi from "joi";
+import { genreModel, validate } from "../mongodb/models/genre.js";
 
 const getAllGenres = async (req, res) => {
   try {
@@ -40,7 +39,7 @@ const updateGenre = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    const { error } = validateGenre(req.body);
+    const { error } = validate(req.body);
     console.log(error);
     if (error)
       return res.status(400).json({ message: error.details[0].message });
@@ -64,11 +63,5 @@ const deleteGenre = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-function validateGenre(genre) {
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
 
-  return schema.validate(genre);
-}
 export { getAllGenres, findGenreById, updateGenre, deleteGenre, createGenre };
