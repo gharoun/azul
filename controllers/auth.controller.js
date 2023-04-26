@@ -1,6 +1,5 @@
-import { userModel } from "../mongodb/models/user.js";
 import bcrypt from "bcrypt";
-
+import { userModel } from "../mongodb/models/user.js";
 import Joi from "joi";
 import { validatePassword } from "../utils/joi-validation.js";
 
@@ -12,12 +11,14 @@ const loginUser = async (req, res) => {
 
     const { email, password } = req.body;
 
-    const userExists = await userModel.findOne({ email });
-    if (!userExists)
+    const user = await userModel.findOne({ email });
+    if (!user)
       return res.status(400).json({ message: "Invalid email or password." });
-    bcrypt.compare(password, userExists.password, function (err, result) {
+
+    bcrypt.compare(password, user.password, function (err, result) {
       if (result) {
-        res.status(200).json(true);
+        const token = user.generateAuthToken();
+        res.status(200).json(token);
       } else {
         return res.status(400).json({ message: "Invalid email or password." });
       }

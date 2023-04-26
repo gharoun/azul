@@ -1,7 +1,6 @@
 import { userModel, validate } from "../mongodb/models/user.js";
 import _ from "lodash";
 import bcrypt from "bcrypt";
-
 const saltRounds = 10;
 
 const getAllUsers = async (req, res) => {
@@ -30,7 +29,11 @@ const createUser = async (req, res) => {
       email,
       password: await bcrypt.hash(password, saltRounds),
     });
-    res.status(200).json(newUser);
+
+    res
+      .header("x-auth-token", newUser.generateAuthToken())
+      .status(200)
+      .json(newUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

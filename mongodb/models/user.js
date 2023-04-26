@@ -2,25 +2,30 @@ import mongoose from "mongoose";
 import Joi from "joi";
 import { validatePassword } from "../../utils/joi-validation.js";
 
-const userModel = mongoose.model(
-  "User",
-  new mongoose.Schema({
-    name: { type: String, required: true, minlength: 2, maxlength: 50 },
-    email: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 1024,
-    },
-  })
-);
+import jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true, minlength: 2, maxlength: 50 },
+  email: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 1024,
+  },
+});
+UserSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ _id: this._id }, process.env.JWT_PRIVATE_KEY);
+};
+const userModel = mongoose.model("User", UserSchema);
 
 function validate(user) {
   const schema = Joi.object({
