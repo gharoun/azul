@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-
+import joiObjectId from "joi-objectid";
+const joi_oid = joiObjectId(Joi);
 import { GenreSchema } from "./genre.js";
 const MovieSchema = new mongoose.Schema({
   title: {
@@ -20,7 +21,7 @@ const movieModel = mongoose.model("Movie", MovieSchema);
 function validate(movie) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
-    genreId: Joi.string().required(),
+    genreId: Joi.joi_oid().required(),
     numberInStock: Joi.number().min(0).required(),
     dailyRentalRate: Joi.number().min(0).required(),
   });
