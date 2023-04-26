@@ -1,5 +1,9 @@
 import { userModel, validate } from "../mongodb/models/user.js";
 import _ from "lodash";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await userModel.find({}).sort("name");
@@ -24,9 +28,9 @@ const createUser = async (req, res) => {
     const newUser = await userModel.create({
       name,
       email,
-      password,
+      password: await bcrypt.hash(password, saltRounds),
     });
-    res.status(200).json(_.pick(newUser, ["name", "email"]));
+    res.status(200).json(newUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
