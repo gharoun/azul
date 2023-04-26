@@ -40,7 +40,6 @@ const updateGenre = async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
     const { error } = validate(req.body);
-    console.log(error);
     if (error)
       return res.status(400).json({ message: error.details[0].message });
 
