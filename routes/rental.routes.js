@@ -1,4 +1,5 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 import {
   getAllRentals,
   createRental,
@@ -6,5 +7,5 @@ import {
 
 const router = express.Router();
 router.route("/").get(getAllRentals);
-router.route("/").post(createRental);
+router.route("/").post(auth, createRental);
 export default router;

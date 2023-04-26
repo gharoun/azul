@@ -1,5 +1,5 @@
 import express from "express";
-
+import auth from "../middleware/auth.js";
 import {
   getAllGenres,
   findGenreById,
@@ -11,8 +11,8 @@ import {
 const router = express.Router();
 router.route("/").get(getAllGenres);
 router.route("/:id").get(findGenreById);
-router.route("/").post(createGenre);
-router.route("/:id").put(updateGenre);
-router.route("/:id").delete(deleteGenre);
+router.route("/").post(auth, createGenre);
+router.route("/:id").put(auth, updateGenre);
+router.route("/:id").delete(auth, deleteGenre);
 
 export default router;
