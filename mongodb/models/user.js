@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { joiPasswordExtendCore } from "joi-password";
-const joiPassword = Joi.extend(joiPasswordExtendCore);
+import { validatePassword } from "../../utils/joi-validation.js";
 
 const userModel = mongoose.model(
   "User",
@@ -27,16 +26,7 @@ function validate(user) {
   const schema = Joi.object({
     name: Joi.string().min(2).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
-    password: joiPassword
-      .string()
-      .minOfSpecialCharacters(1)
-      .minOfLowercase(1)
-      .minOfUppercase(1)
-      .minOfNumeric(1)
-      .noWhiteSpaces()
-      .onlyLatinCharacters()
-      .min(8)
-      .required(),
+    password: validatePassword,
   });
 
   return schema.validate(user);

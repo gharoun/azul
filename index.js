@@ -3,6 +3,7 @@ import customerRouter from "./routes/customer.routes.js";
 import movieRouter from "./routes/movie.routes.js";
 import rentalRouter from "./routes/rental.routes.js";
 import userRouter from "./routes/user.routes.js";
+import authRouter from "./routes/auth.routers.js";
 import connectDB from "./mongodb/connect.js";
 import express from "express";
 import * as dotenv from "dotenv";
@@ -22,6 +23,7 @@ app.use("/api/customers", customerRouter);
 app.use("/api/movies", movieRouter);
 app.use("/api/rentals", rentalRouter);
 app.use("/api/users", userRouter);
+app.use("/api/auth", authRouter);
 const startServer = async () => {
   try {
     connectDB(process.env.MONGODB_URL);
