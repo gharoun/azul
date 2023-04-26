@@ -3,10 +3,10 @@ import _ from "lodash";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 
-const getAllUsers = async (req, res) => {
+const getUserInfo = async (req, res) => {
   try {
-    const users = await userModel.find({}).sort("name");
-    res.status(200).json(users);
+    const user = await userModel.findById(req.user._id).select("-password");
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -39,4 +39,4 @@ const createUser = async (req, res) => {
   }
 };
 
-export { getAllUsers, createUser };
+export { getUserInfo, createUser };
