@@ -6,7 +6,8 @@ const getAllGenres = async (req, res) => {
 };
 const findGenreById = async (req, res) => {
   const { id } = req.params;
-  const genre = await genreModel.findOne({ _id: id });
+
+  const genre = await genreModel.findById(id);
   if (genre) {
     res.status(200).json(genre);
   } else {
