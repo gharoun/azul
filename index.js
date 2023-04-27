@@ -1,11 +1,9 @@
 import express from "express";
-import connectDB from "./mongodb/connect.js";
 import routes from "./startup/routes.js";
+import DBConnect from "./startup/connectDB.js";
 const app = express();
-
-connectDB();
+DBConnect();
 routes(app);
-
 const port = process.env.PORT || 3000;
 const startServer = async () => {
   try {

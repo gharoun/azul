@@ -1,6 +1,6 @@
-import { rentalModel, validate } from "../mongodb/models/rental.js";
-import { movieModel } from "../mongodb/models/movie.js";
-import { customerModel } from "../mongodb/models/customer.js";
+import { rentalModel, validate } from "../models/rental.js";
+import { movieModel } from "../models/movie.js";
+import { customerModel } from "../models/customer.js";
 import mongoose from "mongoose";
 
 const getAllRentals = async (req, res) => {

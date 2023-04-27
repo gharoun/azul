@@ -1,5 +1,5 @@
-import { movieModel, validate } from "../mongodb/models/movie.js";
-import { genreModel } from "../mongodb/models/genre.js";
+import { movieModel, validate } from "../models/movie.js";
+import { genreModel } from "../models/genre.js";
 const getAllMovies = async (req, res) => {
   try {
     const movies = await movieModel.find({});

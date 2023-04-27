@@ -1,4 +1,4 @@
-import { userModel, validate } from "../mongodb/models/user.js";
+import { userModel, validate } from "../models/user.js";
 import _ from "lodash";
 import bcrypt from "bcrypt";
 const saltRounds = 10;

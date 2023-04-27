@@ -1,4 +1,4 @@
-import { customerModel, validate } from "../mongodb/models/customer.js";
+import { customerModel, validate } from "../models/customer.js";
 
 const getAllCustomers = async (req, res) => {
   const customers = await customerModel.find({});

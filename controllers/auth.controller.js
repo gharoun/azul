@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { userModel } from "../mongodb/models/user.js";
+import { userModel } from "../models/user.js";
 import Joi from "joi";
 import { validatePassword } from "../utils/joi-validation.js";
 

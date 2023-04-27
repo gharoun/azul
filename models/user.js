@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { validatePassword } from "../../utils/joi-validation.js";
+import { validatePassword } from "../utils/joi-validation.js";
 
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
