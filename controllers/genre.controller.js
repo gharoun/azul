@@ -1,6 +1,7 @@
 import { genreModel, validate } from "../mongodb/models/genre.js";
 
 const getAllGenres = async (req, res) => {
+  throw new Error("Couldn't get all genres");
   const genres = await genreModel.find({});
   res.status(200).json(genres);
 };
