@@ -3,29 +3,24 @@ import { userModel } from "../mongodb/models/user.js";
 import Joi from "joi";
 import { validatePassword } from "../utils/joi-validation.js";
 
-const loginUser = async (req, res) => {
-  try {
-    const { error } = validate(req.body);
-    if (error)
-      return res.status(400).json({ message: error.details[0].message });
+const loginUser = async (req, res, next) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
 
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email });
-    if (!user)
+  const user = await userModel.findOne({ email });
+  if (!user)
+    return res.status(400).json({ message: "Invalid email or password." });
+
+  bcrypt.compare(password, user.password, function (err, result) {
+    if (result) {
+      const token = user.generateAuthToken();
+      res.status(200).json(token);
+    } else {
       return res.status(400).json({ message: "Invalid email or password." });
-
-    bcrypt.compare(password, user.password, function (err, result) {
-      if (result) {
-        const token = user.generateAuthToken();
-        res.status(200).json(token);
-      } else {
-        return res.status(400).json({ message: "Invalid email or password." });
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    }
+  });
 };
 
 function validate(user) {

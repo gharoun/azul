@@ -1,5 +1,6 @@
 import express from "express";
 import auth from "../middleware/auth.js";
+import asyncMiddleware from "../middleware/async.js";
 import {
   updateMovie,
   deleteMovie,
@@ -10,10 +11,10 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(getAllMovies);
-router.route("/:id").get(findMovieById);
-router.route("/").post(auth, createMovie);
-router.route("/:id").put(auth, updateMovie);
-router.route("/:id").delete(auth, deleteMovie);
+router.route("/").get(asyncMiddleware(getAllMovies));
+router.route("/:id").get(asyncMiddleware(findMovieById));
+router.route("/").post(auth, asyncMiddleware(createMovie));
+router.route("/:id").put(auth, asyncMiddleware(updateMovie));
+router.route("/:id").delete(auth, asyncMiddleware(deleteMovie));
 
 export default router;
