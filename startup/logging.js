@@ -12,8 +12,11 @@ export const logger = winston.createLogger({
     new winston.transports.File({
       filename: "logfile.log",
     }),
-    new winston.transports.File({
-      filename: "logInfo.log",
+    new winston.transports.Console({
+      colorize: true,
+      prettyPrint: true,
+    }),
+    new winston.transports.Console({
       level: "info",
     }),
     new winston.transports.MongoDB({
