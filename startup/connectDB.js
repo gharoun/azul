@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
-import * as dotenv from "dotenv";
+
 import { logger } from "./logging.js";
-dotenv.config();
-export default function () {
+
+export default function (url) {
   mongoose.set("strictQuery", true);
 
-  mongoose
-    .connect(process.env.MONGODB_URL)
-    .then(() => logger.info("Connected to Mongodb ..."));
+  mongoose.connect(url).then(() => logger.info("Connected to Mongodb ..."));
 }

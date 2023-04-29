@@ -15,6 +15,8 @@ const findGenreById = async (req, res) => {
   }
 };
 const createGenre = async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
   const { name } = req.body;
   const genreExists = await genreModel.findOne({ name });
   if (genreExists) return res.status(200).json(genreExists);

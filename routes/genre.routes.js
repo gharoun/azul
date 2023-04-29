@@ -2,6 +2,7 @@ import express from "express";
 import auth from "../middleware/auth.js";
 import admin from "../middleware/admin.js";
 import asyncMiddleware from "../middleware/async.js";
+import validateObjectId from "../middleware/validateObjectId.js";
 import {
   getAllGenres,
   findGenreById,
@@ -12,7 +13,7 @@ import {
 
 const router = express.Router();
 router.route("/").get(asyncMiddleware(getAllGenres));
-router.route("/:id").get(asyncMiddleware(findGenreById));
+router.route("/:id").get(validateObjectId, asyncMiddleware(findGenreById));
 router.route("/").post(auth, asyncMiddleware(createGenre));
 router.route("/:id").put(auth, asyncMiddleware(updateGenre));
 router.route("/:id").delete([auth, admin], asyncMiddleware(deleteGenre));

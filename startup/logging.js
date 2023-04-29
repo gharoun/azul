@@ -1,5 +1,5 @@
 import winston from "winston";
-import "winston-mongodb";
+// import "winston-mongodb";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -19,14 +19,14 @@ export const logger = winston.createLogger({
     new winston.transports.Console({
       level: "info",
     }),
-    new winston.transports.MongoDB({
-      db: process.env.MONGODB_URL,
-      level: "error",
-      format: metadata(),
-      options: {
-        useUnifiedTopology: true,
-      },
-    }),
+    // new winston.transports.MongoDB({
+    //   db: process.env.MONGODB_URL,
+    //   level: "error",
+    //   format: metadata(),
+    //   options: {
+    //     useUnifiedTopology: true,
+    //   },
+    // }),
   ],
 });
 process.on("uncaughtException", (ex) => {
