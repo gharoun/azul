@@ -1,5 +1,5 @@
-import { rentalModel } from "../models/rental";
-import { movieModel } from "../models/movie";
+import { rentalModel } from "../models/rental.js";
+import { movieModel } from "../models/movie.js";
 
 const createReturn = async (req, res) => {
   const { customerId, movieId } = req.body;
