@@ -1,4 +1,4 @@
-import { genreModel, validate } from "../models/genre.js";
+import { genreModel } from "../models/genre.js";
 
 const getAllGenres = async (req, res) => {
   const genres = await genreModel.find({});
@@ -15,8 +15,6 @@ const findGenreById = async (req, res) => {
   }
 };
 const createGenre = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
   const { name } = req.body;
   const genreExists = await genreModel.findOne({ name });
   if (genreExists) return res.status(200).json(genreExists);
@@ -29,8 +27,6 @@ const createGenre = async (req, res) => {
 const updateGenre = async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
 
   await genreModel.findByIdAndUpdate({ _id: id }, { name });
   res.status(200).json({ message: "Genre Updated successfully." });

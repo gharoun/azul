@@ -1,4 +1,4 @@
-import { userModel, validate } from "../models/user.js";
+import { userModel } from "../models/user.js";
 import _ from "lodash";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
@@ -9,9 +9,6 @@ const getUserInfo = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
-
   const { name, email, password } = req.body;
 
   const userExists = await userModel.findOne({ email });

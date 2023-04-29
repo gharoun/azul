@@ -1,4 +1,4 @@
-import { rentalModel, validate } from "../models/rental.js";
+import { rentalModel } from "../models/rental.js";
 import { movieModel } from "../models/movie.js";
 import { customerModel } from "../models/customer.js";
 import mongoose from "mongoose";
@@ -9,10 +9,6 @@ const getAllRentals = async (req, res) => {
 };
 
 const createRental = async (req, res) => {
-  //validate client request
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
-
   //extract body object
   const { customerId, movieId } = req.body;
 

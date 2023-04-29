@@ -1,4 +1,4 @@
-import { customerModel, validate } from "../models/customer.js";
+import { customerModel } from "../models/customer.js";
 
 const getAllCustomers = async (req, res) => {
   const customers = await customerModel.find({});
@@ -30,9 +30,6 @@ const findCustomerById = async (req, res) => {
 const updateCustomer = async (req, res) => {
   const { id } = req.params;
   const { name, isGold, phone } = req.body;
-  const { error } = validate(req.body);
-  console.log(error);
-  if (error) return res.status(400).json({ message: error.details[0].message });
 
   await customerModel.findByIdAndUpdate({ _id: id }, { name, isGold, phone });
   res.status(200).json({ message: "Customer Updated successfully." });

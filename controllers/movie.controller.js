@@ -1,4 +1,4 @@
-import { movieModel, validate } from "../models/movie.js";
+import { movieModel } from "../models/movie.js";
 import { genreModel } from "../models/genre.js";
 const getAllMovies = async (req, res) => {
   try {
@@ -22,10 +22,6 @@ const findMovieById = async (req, res) => {
   }
 };
 const createMovie = async (req, res) => {
-  //validate client request
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
-
   //extract body object
   const { title, numberInStock, dailyRentalRate, genreId } = req.body;
 
@@ -46,9 +42,6 @@ const createMovie = async (req, res) => {
   res.status(200).json(newMovie);
 };
 const updateMovie = async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
-
   const { id } = req.params;
   const { title, numberInStock, dailyRentalRate, genreId } = req.body;
 

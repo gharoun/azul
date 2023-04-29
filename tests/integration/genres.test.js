@@ -7,9 +7,7 @@ let server;
 const url = "mongodb://127.0.0.1:27017/azul_test";
 describe("/api/genres", () => {
   beforeEach(async () => {
-    await mongoose
-      .connect(url)
-      .then(() => console.log("Connected to Mongodb ..."));
+    await mongoose.connect(url);
     server = app.listen(3000);
   });
 

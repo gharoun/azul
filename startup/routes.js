@@ -4,6 +4,7 @@ import movieRouter from "../routes/movie.routes.js";
 import rentalRouter from "../routes/rental.routes.js";
 import userRouter from "../routes/user.routes.js";
 import authRouter from "../routes/auth.routers.js";
+import returnRouter from "../routes/return.routes.js";
 import error from "../middleware/error.js";
 import express from "express";
 
@@ -18,5 +19,6 @@ export default function (app) {
   app.use("/api/rentals", rentalRouter);
   app.use("/api/users", userRouter);
   app.use("/api/auth", authRouter);
+  app.use("/api/returns", returnRouter);
   app.use(error);
 }
